@@ -10,6 +10,15 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
+  get token(): string {
+    const expiresDate = new Date(localStorage.getItem('firebase-token-expired'));
+    if (new Date() > expiresDate) {
+      this.logout();
+      return null;
+    }
+    return localStorage.getItem('firebase-token');
+  }
+
   login(user: User): Observable<any> {
     user.returnSecureToken = true;
 
