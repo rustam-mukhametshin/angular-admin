@@ -38,6 +38,10 @@ export class AuthService {
     this.setToken(null);
   }
 
+  isAuthenticated(): boolean {
+    return !!this.token;
+  }
+
   private handleError(error: HttpErrorResponse) {
     const {message} = error.error.error;
     switch (message) {
