@@ -5,6 +5,10 @@
     <p>{{error}}</p>
   </div>
 
+  <div class="alert alert-info" *ngIf="message">
+    <p>{{message}}</p>
+  </div>
+
   <div
     class="form-control mt-3"
     [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}"
