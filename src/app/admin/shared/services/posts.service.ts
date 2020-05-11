@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {FirebaseCreateResponse, Post} from '../../admin/shared/interfaces';
-import {environment} from '../../../environments/environment';
+import {FirebaseCreateResponse, Post} from '../interfaces';
+import {environment} from '../../../../environments/environment';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -25,5 +25,17 @@ export class PostsService {
         };
       }))
       ;
+  }
+
+  getAll(): Observable<Post[]> {
+    return this.httpClient.get(`${environment.firebaseDbUrl}/posts.json`)
+      .pipe(map((response: { [key: string]: any }) => {
+        return Object.keys(response)
+          .map(key => ({
+            ...response[key],
+            id: key,
+            date: new Date(response[key].date)
+          }));
+      }));
   }
 }
