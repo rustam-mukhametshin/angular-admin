@@ -3,7 +3,7 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest}
 import {Observable, throwError} from 'rxjs';
 import {AuthService} from '../admin/shared/services/auth.service';
 import {Router} from '@angular/router';
-import {catchError, tap} from 'rxjs/operators';
+import {catchError} from 'rxjs/operators';
 
 @Injectable()
 
@@ -26,9 +26,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(req)
       .pipe(
-        tap(() => {
-          console.log('intercept');
-        }),
         catchError((error: HttpErrorResponse) => {
           console.log('Interceptor Error: ', error);
           if (error.status === 401) {
